@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en" class="d">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>History quick view</title>
+        <link rel="stylesheet" href="/style.css">
+        <script src="/main.js" defer></script>
+        <template id="template_rangesearch">
+            <section class="range" data-starttime="">
+                <div class="date" data-type="date">
+                    <h2 class="title" name="title"></h2>
+                </div>
+            </section>
+        </template>
+        <template id="template_range">
+            <section class="range" data-starttime="">
+                <div class="date" data-type="date">
+                    <h2 class="title" name="title"></h2>
+                    <button
+                        data-type="remove"
+                        data-for="date"
+                        title=""
+                        type="button"
+                        class="shell"
+                        name="remove"
+                    >
+                        <svg
+                            class="icon icon-x"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M18 6 6 18"/>
+                            <path d="m6 6 12 12"/>
+                        </svg>
+                    </button>
+                </div>
+            </section>
+        </template>
+        <template id="template_item">
+            <a
+                data-type="item"
+                class="item shell"
+                href=""
+                title=""
+                target="_blank"
+                rel="noopener noreferrer"
+                data-id=""
+            >
+                <img
+                    class="favicon"
+                    name="img"
+                    src=""
+                    alt="favicon"
+                    width="16"
+                    height="16"
+                >
+                <p class="title" name="title"></p>
+                <p class="time" name="time"></p>
+                <button
+                    data-type="remove"
+                    data-for="item"
+                    title="remove"
+                    name="remove"
+                    class="shell"
+                    type="button"
+                >
+                    <svg
+                        class="icon icon-x"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M18 6 6 18"/>
+                        <path d="m6 6 12 12"/>
+                    </svg>
+                </button>
+            </a>
+        </template>
+    </head>
+    <body>
+        <header class="header">
+            <div class="left">
+                <h1>历史记录</h1>
+                <div id="h_loading" class="loading">
+                    <svg
+                        class="icon icon-loader"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M12 2v4"/>
+                        <path d="m16.2 7.8 2.9-2.9"/>
+                        <path d="M18 12h4"/>
+                        <path d="m16.2 16.2 2.9 2.9"/>
+                        <path d="M12 18v4"/>
+                        <path d="m4.9 19.1 2.9-2.9"/>
+                        <path d="M2 12h4"/>
+                        <path d="m4.9 4.9 2.9 2.9"/>
+                    </svg>
+                </div>
+            </div>
+            <nav id="h_buttons" class="right">
+                <button name="more" title="More" type="button" class="shell">
+                    <svg
+                        class="icon icon-ellipsis"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <circle cx="12" cy="12" r="1"/>
+                        <circle cx="19" cy="12" r="1"/>
+                        <circle cx="5" cy="12" r="1"/>
+                    </svg>
+                </button>
+                <button name="close" title="Close" type="button" class="shell">
+                    <svg
+                        class="icon icon-x"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M18 6 6 18"/>
+                        <path d="m6 6 12 12"/>
+                    </svg>
+                </button>
+            </nav>
+        </header>
+        <main id="main" data-show="search">
+            <section name="search" id="section_search">
+                <form
+                    role="search"
+                    name="search"
+                    aria-label="on browsing history"
+                >
+                    <div class="container text">
+                        <svg
+                            class="icon icon-search"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="11" cy="11" r="8"/>
+                            <path d="m21 21-4.3-4.3"/>
+                        </svg>
+                        <input
+                            name="text"
+                            type="text"
+                            value=""
+                            placeholder="搜索历史"
+                        />
+                        <button
+                            name="clear-text"
+                            class="shell"
+                            type="button"
+                            data-css-hidden
+                        >
+                            <svg
+                                class="icon icon-x"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            >
+                                <path d="M18 6 6 18"/>
+                                <path d="m6 6 12 12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="container date">
+                        <svg
+                            class="icon icon-calendar"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M8 2v4"/>
+                            <path d="M16 2v4"/>
+                            <rect width="18" height="18" x="3" y="4" rx="2"/>
+                            <path d="M3 10h18"/>
+                        </svg>
+                        <input
+                            name="date"
+                            type="date"
+                            value=""
+                            title="选择日期"
+                        />
+                    </div>
+                </form>
+                <div class="search-container">
+                    <p id="m_empty" class="empty" data-css-hidden>
+                        No History
+                    </p>
+                    <section id="m_error" class="error" data-css-hidden>
+                        <h3>Sorry, an ERROR occurs</h3>
+                        <span name="msg"></span>
+                        <span>please report to <a
+                            href="https://github.com/AxelArielSaravia/history-quick-view/issues"
+                            target="_blank"
+                            rel="noreferrer noopener"
+                        >github</a></span>
+                    </section>
+                    <div id="m_container" class="container">
+                    </div>
+                </div>
+            </section>
+            <section name="more" id="section_more" class="page">
+                <header>
+                    <h2>设置</h2>
+                    <button class="shell" data-action="close" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="icon icon-arrow-left-from-line"
+                        >
+                            <path d="m9 6-6 6 6 6"/>
+                            <path d="M3 12h14"/>
+                            <path d="M21 19V5"/>
+                        </svg>
+                    </button>
+                </header>
+                <form name="more">
+                    <div class="field">
+                        <p>主题：</p>
+                        <select name="theme">
+                            <option value="s">跟随系统</option>
+                            <option value="d">深色</option>
+                            <option value="l">浅色</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <p>显示搜索栏：</p>
+                        <input name="showsearch" type="checkbox" checkd>
+                    </div>
+                    <div class="field">
+                        <p
+                            title="设置链接打开方式"
+                        >打开链接于：</p>
+                        <select name="open">
+                            <option value="c">当前标签页</option>
+                            <option value="n">新标签页</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <p title="打开新标签页时是否自动切换到新标签页">
+                            自动切换到新标签页：
+                        </p>
+                        <input name="focus" type="checkbox">
+                    </div>
+                </form>
+                <footer class="socials">
+                </footer>
+            </section>
+            <section name="keyboard" id="section_keyboard" class="page">
+                <header>
+                    <h2>快捷键</h2>
+                    <button class="shell" data-action="close" type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="icon icon-arrow-left-from-line"
+                        >
+                            <path d="m9 6-6 6 6 6"/>
+                            <path d="M3 12h14"/>
+                            <path d="M21 19V5"/>
+                        </svg>
+                    </button>
+                </header>
+                <article>
+                    <h3><kbd>Tab</kbd></h3>
+                    <p>正常导航。</p>
+                </article>
+                <hr>
+                <article>
+                    <h3><kbd>s</kbd></h3>
+                    <p>聚焦到搜索框。</p>
+                </article>
+                <article>
+                    <h3><kbd>Ctrl</kbd> + <kbd>q</kbd></h3>
+                    <p>在搜索框中，清除搜索文本。</p>
+                </article>
+                <hr>
+                <article>
+                    <h3><kbd>r</kbd></h3>
+                    <p>删除一条历史记录。</p>
+                </article>
+                <article>
+                    <h3><kbd>Shift</kbd> + <kbd>r</kbd></h3>
+                    <p>删除当天的所有历史记录。</p>
+                </article>
+                <article>
+                    <h3><kbd>Ctrl</kbd> + <kbd>Enter</kbd></h3>
+                    <p>以相反的方式打开链接（新标签页/当前标签页）。</p>
+                </article>
+                <article>
+                    <h3><kbd>Ctrl</kbd> + <kbd>mouse click</kbd></h3>
+                    <p>以相反的方式打开链接（新标签页/当前标签页）。</p>
+                </article>
+                <article>
+                    <h3><kbd>Shift</kbd> + <kbd>Enter</kbd></h3>
+                    <p>在新窗口中打开链接。</p>
+                </article>
+                <article>
+                    <h3><kbd>Shift</kbd> + <kbd>mouse click</kbd></h3>
+                    <p>在新窗口中打开链接。</p>
+                </article>
+                <hr>
+                <article>
+                    <h3><kbd>Ctrl</kbd> + <kbd>q</kbd></h3>
+                    <p>关闭当前页面。</p>
+                </article>
+                <article>
+                    <h3><kbd>m</kbd></h3>
+                    <p>
+                        打开或关闭"设置"页面 <svg
+                            class="icon icon-ellipsis"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <circle cx="12" cy="12" r="1"/>
+                            <circle cx="19" cy="12" r="1"/>
+                            <circle cx="5" cy="12" r="1"/>
+                        </svg>
+                    </p>
+                </article>
+                <article>
+                    <h3><kbd>k</kbd></h3>
+                    <p>
+                        打开或关闭"快捷键"页面 <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="icon icon-keyboard"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        >
+                            <path d="M10 8h.01"/>
+                            <path d="M12 12h.01"/>
+                            <path d="M14 8h.01"/>
+                            <path d="M16 12h.01"/>
+                            <path d="M18 8h.01"/>
+                            <path d="M6 8h.01"/>
+                            <path d="M7 16h10"/>
+                            <path d="M8 12h.01"/>
+                            <rect width="20" height="16" x="2" y="4" rx="2"/>
+                        </svg>
+                    </p>
+                </article>
+            </section>
+        </main>
+    </body>
+</html>

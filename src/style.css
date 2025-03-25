@@ -1,0 +1,660 @@
+:root {
+    --font: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+
+    --icon-size: 20px;
+
+    --font-size: 1.4rem;
+
+    --z-index-mid: 2;
+    --z-index-high: 3;
+
+    --item-height: 40px;
+
+    --border-radius: 8px;
+    --search-height: 476px;
+    --page-height: 531px;
+
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --transition: all 0.2s ease;
+}
+
+html {
+    background: #000;
+    font-size: 10px;
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+html.d {
+    --color: #e8eaed;
+    --color-bg: #202124;
+    --color-bg-d: #292a2d;
+
+    --color-hover: #35363a;
+    --color-hover-l: #3c4043;
+    accent-color: #8ab4f8;
+    color-scheme: dark;
+}
+
+html.l {
+    --color: #3c4043;
+    --color-bg: #F3F3F3;
+    --color-bg-d: #e8eaed;
+
+    --color-hover: #f5f5f5;
+    --color-hover-l: #ffffff;
+    accent-color: #1a73e8;
+    color-scheme: light;
+}
+
+body {
+    position: relative;
+    width: 380px;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font);
+    background: var(--color-bg);
+    color: var(--color);
+}
+
+[data-css-hidden] {
+    display: none;
+}
+
+[data-css-invalid] {
+    color: red;
+    text-decoration-line: line-through;
+}
+
+.shell::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+
+:is(h1, h2, h3, p, select) {
+    font-size: var(--font-size);
+    margin: 0;
+}
+
+select {
+    padding: 8px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-bg-d);
+    background: var(--color-bg);
+    color: var(--color);
+    font-family: var(--font);
+    transition: var(--transition);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color-alpha);
+}
+
+a {
+    color: var(--color);
+    border-radius: var(--border-radius);
+}
+a:hover {
+    background: var(--color-hover);
+    border-radius: var(--border-radius);
+}
+
+input {
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-bg-d);
+    color: var(--color);
+    background: var(--color-bg);
+    transition: var(--transition);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color-alpha);
+}
+
+:is(button, select, input[type="checkbox"]) {
+    cursor: pointer;
+}
+
+button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 8px;
+    color: var(--color);
+    font-family: var(--font);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    background: transparent;
+}
+
+button:hover {
+    background: var(--color-hover);
+}
+
+button:not(:hover) {
+    background: transparent;
+}
+
+kbd {
+    font-family: monospace;
+    border: 1px solid var(--color);
+    border-radius: var(--border-radius);
+    padding: 2px 4px;
+}
+
+.icon {
+    width: var(--icon-size);
+}
+
+
+/*HEADER*/
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.header .left {
+    display: flex;
+    align-items: center;
+}
+
+.header .right {
+    display: flex;
+    align-items: center;
+}
+
+.header h1 {
+    font-weight: 600;
+    padding: 5px;
+}
+.header h1 span {
+    font-size: 1ch;
+    font-weight: normal;
+}
+
+.header .loading {
+    animation: 2s ease-in-out 0s infinite spin;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+form[name="search"]:not([data-css-hidden]) {
+    --icon-size: 15px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 16px;
+    gap: 8px;
+}
+
+form[name="search"] .container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    background: var(--color-bg-d);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+form[name="search"] .container:hover {
+    background: var(--color-hover);
+}
+
+form[name="search"] .container.text {
+    width: 65%;
+}
+
+form[name="search"] input[type="date"] {
+    width: 100%;
+    min-height: var(--item-height);
+    background: var(--color-bg-d);
+    font-family: var(--font);
+    border: none;
+    line-height: 1.5;
+    padding: 8px 12px 8px 36px;
+    font-size: var(--font-size);
+    color: var(--color);
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.15s;
+}
+
+form[name="search"] input[type="date"]:hover {
+    background: var(--color-hover);
+}
+
+form[name="search"] input[type="date"]:focus {
+    outline: none;
+    background: var(--color-hover);
+    box-shadow: 0 0 0 2px rgba(138, 180, 248, 0.1);
+}
+
+form[name="search"] input[type="date"]::-webkit-calendar-picker-indicator {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    z-index: 1;
+}
+
+form[name="search"] .container.date {
+    --font-size: 1.2rem;
+    width: 35%;
+    position: relative;
+    background: transparent;
+}
+
+form[name="search"] .container.date .icon-calendar {
+    position: absolute;
+    left: 12px;
+    color: var(--color);
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 2;
+}
+
+form[name="search"] :where(.icon-search, .icon-calendar) {
+    position: absolute;
+    left: 12px;
+    color: var(--color);
+    opacity: 0.7;
+}
+
+form[name="search"] input {
+    width: 100%;
+    min-height: var(--item-height);
+    background: transparent;
+    font-family: var(--font);
+    border: none;
+    line-height: 1.5;
+    padding: 8px 12px 8px 36px;
+    font-size: var(--font-size);
+}
+
+form[name="search"] input:focus {
+    box-shadow: none;
+}
+
+.search-container {
+    --padding: 0px 8px;
+    --icon-size: 15px;
+    --height: var(--search-height);
+
+    position: relative;
+
+    padding-block: 5px;
+    border-top: 1px solid var(--color-hover-l);
+    line-height: 2;
+}
+form[name="search"][data-css-hidden]~.search-container {
+    --height: var(--page-height);
+}
+
+.search-container :is(.empty,.error):not([data-css-hidden]) {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 40%;
+    height: 100%;
+    width: 100%;
+    font-size: 2rem;
+}
+.search-container .error h3 {
+    font-size: 2.2rem;
+    color: red;
+}
+
+.search-container .error a {
+    color: red;
+}
+
+.search-container .container {
+    overflow: auto;
+    height: var(--height);
+    padding-inline: 5px;
+}
+
+.search-container .container::-webkit-scrollbar {
+    width: 8px;
+}
+.search-container .container::-webkit-scrollbar-thumb {
+    background-color: var(--color-hover-l);
+}
+
+.search-container :is(.date, .item) [name="remove"] {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: var(--z-index-mid);
+}
+
+.search-container :is(.item, .date):not(:hover) {
+    background: var(--color-bg);
+}
+
+.search-container :is(.item, .date):hover {
+    background: var(--color-hover);
+}
+
+.search-container .date {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-index-high);
+    display: flex;
+    align-items: center;
+    padding: var(--padding);
+    height: var(--item-height);
+    border-radius: var(--border-radius);
+}
+
+.search-container .item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--item-height);
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: var(--border-radius);
+    margin: 2px 8px;
+    transition: var(--transition);
+}
+
+.search-container .item:hover {
+    background: var(--color-hover);
+}
+
+.search-container .item .favicon {
+    width: 16px;
+    height: 16px;
+    margin-right: 12px;
+    border-radius: 4px;
+}
+
+.search-container .item [name="title"] {
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color);
+}
+
+.search-container .item [name="time"] {
+    --font-size: 1.2rem;
+    color: var(--color);
+    opacity: 0.7;
+    margin-left: 12px;
+}
+
+.search-container .item:hover [name="time"] {
+    visibility: hidden;
+}
+
+.search-container .item:not(:hover) [name="remove"] {
+    display: none;
+}
+
+.search-container .date [name="remove"] {
+    display: none;
+}
+
+
+.page {
+    overflow: auto;
+    width: 100%;
+    height: var(--page-height);
+    padding: 0 16px 16px;
+}
+
+.page::-webkit-scrollbar-thumb {
+    background-color: var(--color-hover-l);
+}
+.page::-webkit-scrollbar {
+    width: 8px;
+}
+
+.page[name="more"] {
+    --section-spacing: 8px;
+    padding: 0;
+}
+
+.page[name="more"] form {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.page[name="more"] form .field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    min-height: 48px;
+    transition: background-color 0.15s;
+    cursor: pointer;
+    border-radius: 0;
+}
+
+.page[name="more"] form .field:hover {
+    background-color: var(--color-hover);
+}
+
+.page[name="more"] form .field p {
+    color: var(--color);
+    font-size: 13.5px;
+    font-weight: 400;
+    letter-spacing: 0.2px;
+}
+
+.page[name="more"] form select {
+    min-width: 130px;
+    height: 32px;
+    padding: 0 28px 0 12px;
+    border-radius: 4px;
+    border: 1px solid var(--color-bg-d);
+    background: var(--color-bg);
+    color: var(--color);
+    font-size: 13.5px;
+    cursor: pointer;
+    transition: all 0.15s;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    background-size: 16px;
+}
+
+.page[name="more"] form select:hover {
+    background-color: var(--color-hover);
+    border-color: var(--color-hover-l);
+}
+
+.page[name="more"] form select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 1px var(--accent-color);
+}
+
+.page[name="more"] form input[type="checkbox"] {
+    width: 40px;
+    height: 24px;
+    border-radius: 12px;
+    background: var(--color-bg-d);
+    position: relative;
+    transition: all 0.15s;
+    appearance: none;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.page[name="more"] form input[type="checkbox"]::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--color);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page[name="more"] form input[type="checkbox"]:checked {
+    background: #1ed760;
+}
+
+.page[name="more"] form input[type="checkbox"]:checked::before {
+    transform: translate(16px, -50%);
+    background: white;
+}
+
+.page[name="more"] form input[type="checkbox"]:hover {
+    opacity: 0.9;
+}
+
+.page > header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: var(--color-bg);
+    border-bottom: 1px solid var(--color-bg-d);
+    z-index: 1;
+    margin: 0;
+    height: 49px;
+}
+
+.page > header h2 {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--color);
+    letter-spacing: 0.2px;
+}
+
+.page > header button {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    margin: -6px;
+    border-radius: 50%;
+    color: var(--color);
+    transition: background-color 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page > header button:hover {
+    background-color: var(--color-hover);
+}
+
+.page > header button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.page[name="keyboard"] article {
+    padding: 10px 0;
+    display: flex;
+}
+.page[name="keyboard"] article h3 {
+    --font-size: 1.2rem;
+    flex-shrink: 0;
+    line-height: 2;
+}
+
+.page[name="keyboard"] article p {
+    padding-left: 10px;
+}
+
+.page[name="keyboard"] hr {
+    margin: 10px 0;
+    border-color: var(--color);
+}
+
+:is(
+    main[data-show="search"]>:not([name="search"]),
+    main[data-show="more"]>:not([name="more"]),
+    main[data-show="keyboard"]>:not([name="keyboard"])
+) {
+    display: none;
+}
+.page footer {
+    padding: 16px 0;
+    margin-top: 24px;
+    border-top: 1px solid var(--color-bg-d);
+    text-align: center;
+    color: var(--color);
+    opacity: 0.7;
+}
+
+.page footer a {
+    padding: 5px
+}
+
+.page footer a:hover {
+    background: var(--color-hover);
+}
+
+/* 优化搜索框样式 */
+input[type="text"], input[type="date"] {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus, input[type="date"]:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-color-alpha);
+}
+
+/* 优化设置项悬停提示 */
+.field p[title] {
+    cursor: help;
+    border-bottom: 1px dotted var(--text-secondary);
+}
+
+/* 优化日期选择器 */
+input[type="date"] {
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: var(--icon-filter);
+}
